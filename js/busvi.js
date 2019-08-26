@@ -160,7 +160,8 @@
             var html = "<h4>" + selectedYear + " " + selectedMake + " " + selectedModel + "</h4>"
             html += "<p>Current Cost Per Mile: $" + currentCostPerMile + "</p>"
 
-            $("#main").html(html)
+            $("#main").html(html);
+            $("#addressInputs").show();
         });
 
 
@@ -225,6 +226,40 @@
     }
 
 
+    function initialize() {
+
+        var input = document.getElementById('startingLocation');
+        var autocomplete = new google.maps.places.Autocomplete(input);
+
+        autocomplete.addListener('place_changed', function() {
+            var place = autocomplete.getPlace();
+            if (!place.geometry) {
+                // User entered the name of a Place that was not suggested and
+                // pressed the Enter key, or the Place Details request failed.
+                window.alert("No details available for input: '" + place.name + "'");
+                return;
+            }
+            console.log(place);
+        });
+
+        var endingInput = document.getElementById('endingLocation');
+        var endingAutocomplete = new google.maps.places.Autocomplete(endingInput);
+
+        endingAutocomplete.addListener('place_changed', function() {
+            var endingPlace = autocomplete.getPlace();
+            if (!endingPlace.geometry) {
+                // User entered the name of a Place that was not suggested and
+                // pressed the Enter key, or the Place Details request failed.
+                window.alert("No details available for input: '" + endingPlace.name + "'");
+                return;
+            }
+            console.log(endingPlace);
+        });
+
+
+    }
+
+    google.maps.event.addDomListener(window, 'load', initialize);
 
 
 })();
